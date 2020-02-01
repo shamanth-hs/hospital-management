@@ -1,0 +1,8 @@
+CREATE TRIGGER doc_logs_on_update after update on doctor 
+when 
+old.doc_ph_no<>new.doc_ph_no or
+old.doc_address<>new.doc_address
+begin
+insert into doc_logs( doc_id,doc_name,old_doc_ph_no,new_doc_ph_no,old_doc_address,new_doc_address,user_action,created_at) 
+values (new.doc_id, new.doc_first_name, old.doc_ph_no, new.doc_ph_no, old.doc_address, new.doc_address, 'update', datetime('now')); 
+end
